@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #f7f4df;
+    font-family: Arial, sans-serif;
+    color: #263b25;
+}
+
+fieldset {
+    width: 400px;
+    margin: 70px auto 20px;
+    padding: 25px;
+    border: 2px solid #31572c;
+    background-color: #fffef4;
+}
+
+legend {
+    background-color: #31572c;
+    color: white;
+    padding: 8px 18px;
+    font-weight: bold;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #999;
+    border-radius: 3px;
+}
+
+textarea {
+    height: 70px;
+    resize: none;
+}
+
+button {
+    margin-top: 15px;
+    padding: 9px 18px;
+    background-color: #31572c;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #496f32;
+}
+
+a {
+    color: #31572c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dashboard {
+    width: 850px;
+    margin: 60px auto;
+    text-align: center;
+}
+
+.dashboard h1,
+.page h1 {
+    color: #31572c;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.card {
+    padding: 25px;
+    background-color: #fffef4;
+    border: 2px solid #d4a017;
+}
+
+.card:hover {
+    background-color: #f0e5ae;
+}
+
+.card h3 {
+    color: #31572c;
+    margin: 0 0 8px;
+}
+
+.card p {
+    margin: 0;
+    color: #555;
+    font-weight: normal;
+}
+
+.page {
+    width: 850px;
+    margin: 60px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: white;
+}
+
+th {
+    background-color: #31572c;
+    color: white;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f3edc5;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 9px 15px;
+    background-color: #d4a017;
+    color: #263b25;
+}
