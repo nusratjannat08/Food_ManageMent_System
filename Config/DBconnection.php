@@ -23,5 +23,15 @@ class DatabaseConnection
         $connection->close();
     }
 } 
- ?>
+
+
+// Test the connection
+$db = new DatabaseConnection();
+$conn = $db->openConnection();
+
+if ($conn) {
+    echo "<h3 style='color:green;'>✓ Database connected successfully!</h3>";
+    $db->closeConnection($conn);
+}
+?>
 
