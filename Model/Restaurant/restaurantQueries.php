@@ -34,7 +34,14 @@ function restaurantLogin($connection, $tableName, $username, $password)
 
     return $result;
 }
-}
+
+ function getRestaurantInfo($connection,$tableName,$username)
+    {
+        $sql = "SELECT * FROM $tableName
+                WHERE username='$username'";
+
+        return $connection->query($sql);
+    }
 
 
 ?>
