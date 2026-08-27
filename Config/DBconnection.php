@@ -25,7 +25,5 @@ class DatabaseConnection
 } 
 
 
-// Test the connection
  
 ?>
-
