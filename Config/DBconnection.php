@@ -23,6 +23,5 @@ class DatabaseConnection
         $connection->close();
     }
 } 
-
-?>
+ ?>
 
