@@ -42,6 +42,6 @@ function restaurantLogin($connection, $tableName, $username, $password)
 
         return $connection->query($sql);
     }
-
+}
 
 ?>
