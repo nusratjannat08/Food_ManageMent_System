@@ -78,7 +78,7 @@
             </div>
         </a>
 
-        <a href="customer-signup.php">
+       <a href="./View/Customer/signup.php">
             <div class="card">
                 <h3>Customer</h3>
                 <p>Sign up as a customer</p>
