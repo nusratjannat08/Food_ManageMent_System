@@ -71,7 +71,7 @@
             </div>
         </a>
 
-        <a href="restaurant-signup.php">
+        <a href="./View/Restaurant/restaurant-signup.php">
             <div class="card">
                 <h3>Restaurant</h3>
                 <p>Sign up as a restaurant</p>
