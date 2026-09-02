@@ -37,7 +37,7 @@ if ($result && $result->num_rows > 0) {
     session_destroy();
 
 
-    header("Location: ../restaurant-login.php");
+    header("Location: ../../View/Restaurant/restaurant-login.php");
     exit();
 }
 ?>

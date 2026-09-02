@@ -4,6 +4,35 @@ include "../../Model/Restaurant/restaurantQueries.php";
 
 session_start();
 
+if (isset($_POST["action"]) && $_POST["action"] == "checkUsername") {
+
+    $username = $_POST["username"];
+
+    $db = new DatabaseConnection();
+    $connection = $db->openConnection();
+
+    $query = new restaurantQueries();
+
+    $result = $query->checkUsername(
+        $connection,
+        "restaurant",
+        $username
+    );
+
+    if ($result->num_rows > 0) {
+
+        echo "exists";
+
+    } else {
+
+        echo "available";
+    }
+
+    exit();
+}
+
+
+
 $username        = $_POST["username"];
 $name            = $_POST["name"];
 $email           = $_POST["email"];
@@ -50,3 +79,7 @@ if ($result) {
     Header("Location: ../../View/Restaurant/restaurant-signup.php");
     exit;
 }
+
+ 
+
+?>

@@ -1,12 +1,11 @@
 <?php
-session_start();
+ session_start();
+if (!isset($_SESSION["restaurant"])) {
+   header("Location: ../../Controller/Restaurant/restaurantDashboardController.php");
+     exit();
+ }
 
-if (!isset($_SESSION["isLoggedIn"]) || !isset($_SESSION["restaurantinfo"])) {
-    header("Location: ../../Controller/Restaurant/restaurantValidationController.php");
-    exit();
-}
-
-$restaurant = $_SESSION["restaurantinfo"];
+$restaurant = $_SESSION["restaurant"];
 ?>
 <html>
 <head>
@@ -20,7 +19,7 @@ $restaurant = $_SESSION["restaurantinfo"];
         <legend>Restaurant Information</legend>
 
         <label>Restaurant Name:</label>
-        <p><?php echo $restaurant["name"]; ?></p>
+        <p><?php echo $restaurant["username"]; ?></p>
         <label>Phone:</label>
         <p><?php echo $restaurant["phone"]; ?></p>
         <label>Email:</label>

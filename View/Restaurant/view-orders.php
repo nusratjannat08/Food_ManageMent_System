@@ -1,3 +1,32 @@
+<?php
+session_start();
+
+if (!isset($_COOKIE["restaurantUsername"])) {
+    header("Location: restaurant-login.php");
+    exit();
+}
+
+include "../../Config/DBconnection.php";
+include "../../Model/Restaurant/restaurantQueries.php";
+
+$db = new DatabaseConnection();
+$connection = $db->openConnection();
+$query = new restaurantQueries();
+
+$restaurant_username = $_COOKIE["restaurantUsername"];
+
+$result = $query->getIncomingOrders(
+    $connection,
+    $restaurant_username
+);
+
+$orderError = $_SESSION["orderError"] ?? "";
+$orderSuccess = $_SESSION["orderSuccess"] ?? "";
+
+unset($_SESSION["orderError"]);
+unset($_SESSION["orderSuccess"]);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +49,11 @@
             color: #31572c;
         }
 
+        .section-title {
+            color: #31572c;
+            margin-top: 25px;
+        }
+
         .order {
             background-color: #fffef4;
             border: 2px solid #d4a017;
@@ -30,6 +64,16 @@
         .order h2 {
             color: #31572c;
             margin-top: 0;
+        }
+
+        .people {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .person {
+            flex: 1;
         }
 
         table {
@@ -76,6 +120,10 @@
             background-color: #d4a017;
             color: #263b25;
         }
+
+        .status {
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -85,45 +133,32 @@
 
     <h1>Incoming Orders</h1>
 
+    <?php if ($orderError) { ?>
+        <p style="color:red"><?php echo $orderError; ?></p>
+    <?php } ?>
+
+    <?php if ($orderSuccess) { ?>
+        <p style="color:green"><?php echo $orderSuccess; ?></p>
+    <?php } ?>
+
     <?php
 
-    $orders = [
-        [
-            "order_id" => 1001,
-            "customer" => "Rahim",
-            "status" => "Pending",
+    if ($result && $result->num_rows > 0) {
 
-            "items" => [
-                [
-                    "food" => "Chicken Burger",
-                    "quantity" => 2,
-                    "price" => 250
-                ],
+        $hasPending = false;
+        $hasProcessed = false;
 
-                [
-                    "food" => "French Fries",
-                    "quantity" => 1,
-                    "price" => 120
-                ]
-            ]
-        ],
+        while ($order = $result->fetch_assoc()) {
 
-        [
-            "order_id" => 1002,
-            "customer" => "Karim",
-            "status" => "Pending",
+            if ($order["status"] == "pending" && !$hasPending) {
+                $hasPending = true;
+                echo '<h2 class="section-title">Unaccepted Orders</h2>';
+            }
 
-            "items" => [
-                [
-                    "food" => "Pizza",
-                    "quantity" => 1,
-                    "price" => 500
-                ]
-            ]
-        ]
-    ];
-
-    foreach ($orders as $order) {
+            if ($order["status"] != "pending" && !$hasProcessed) {
+                $hasProcessed = true;
+                echo '<h2 class="section-title">Accepted / Rejected Orders</h2>';
+            }
     ?>
 
         <div class="order">
@@ -132,9 +167,45 @@
                 Order #<?php echo $order["order_id"]; ?>
             </h2>
 
+            <div class="people">
+
+                <div class="person">
+                    <p>
+                        <strong>Customer:</strong>
+                        <?php echo htmlspecialchars($order["customer_name"]); ?>
+                    </p>
+
+                    <p>
+                        <strong>Customer Phone:</strong>
+                        <?php echo htmlspecialchars($order["customer_phone"]); ?>
+                    </p>
+                </div>
+
+                <div class="person">
+                    <p>
+                        <strong>Deliveryman:</strong>
+                        <?php
+                        echo $order["deliveryman_name"]
+                            ? htmlspecialchars($order["deliveryman_name"])
+                            : "Not assigned";
+                        ?>
+                    </p>
+
+                    <p>
+                        <strong>Deliveryman Phone:</strong>
+                        <?php
+                        echo $order["deliveryman_phone"]
+                            ? htmlspecialchars($order["deliveryman_phone"])
+                            : "Not assigned";
+                        ?>
+                    </p>
+                </div>
+
+            </div>
+
             <p>
-                <strong>Customer:</strong>
-                <?php echo $order["customer"]; ?>
+                <strong>Order Date:</strong>
+                <?php echo htmlspecialchars($order["order_date"]); ?>
             </p>
 
             <table>
@@ -143,13 +214,23 @@
                     <th>Food</th>
                     <th>Quantity</th>
                     <th>Price</th>
+                    <th>Total</th>
                 </tr>
 
-                <?php foreach ($order["items"] as $item) { ?>
+                <?php
+                $items = $query->getOrderItems(
+                    $connection,
+                    $order["order_id"],
+                    $restaurant_username
+                );
+
+                if ($items && $items->num_rows > 0) {
+                    while ($item = $items->fetch_assoc()) {
+                ?>
 
                     <tr>
                         <td>
-                            <?php echo $item["food"]; ?>
+                            <?php echo htmlspecialchars($item["food_name"]); ?>
                         </td>
 
                         <td>
@@ -157,55 +238,86 @@
                         </td>
 
                         <td>
-                            ৳<?php echo $item["price"]; ?>
+                            ৳<?php echo number_format($item["price"], 2); ?>
+                        </td>
+
+                        <td>
+                            ৳<?php echo number_format($item["item_total"], 2); ?>
                         </td>
                     </tr>
 
-                <?php } ?>
+                <?php
+                    }
+                }
+                ?>
 
             </table>
 
             <p>
-                <strong>Status:</strong>
-                <?php echo $order["status"]; ?>
+                <strong>Total Price:</strong>
+                ৳<?php echo number_format($order["total_price"], 2); ?>
             </p>
 
-            <form method="POST">
+            <p class="status">
+                <strong>Status:</strong>
+                <?php
+                if ($order["status"] == "pending") {
+                    echo "Pending";
+                } elseif ($order["status"] == "accepted") {
+                    echo "Accepted";
+                } elseif ($order["status"] == "cancelled") {
+                    echo "Rejected";
+                } else {
+                    echo htmlspecialchars($order["status"]);
+                }
+                ?>
+            </p>
 
-                <input
-                    type="hidden"
-                    name="order_id"
-                    value="<?php echo $order["order_id"]; ?>"
-                >
+            <?php if ($order["status"] == "pending") { ?>
 
-                <button
-                    type="submit"
-                    name="action"
-                    value="accept"
-                >
-                    Accept
-                </button>
+                <form action="../../Controller/Restaurant/viewOrdersController.php"
+                      method="post">
 
-                <button
-                    type="submit"
-                    name="action"
-                    value="reject"
-                    class="reject"
-                >
-                    Reject
-                </button>
+                    <input type="hidden"
+                           name="order_id"
+                           value="<?php echo $order["order_id"]; ?>">
 
-            </form>
+                    <button
+                        type="submit"
+                        name="action"
+                        value="accept">
+                        Accept
+                    </button>
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="reject"
+                        class="reject">
+                        Reject
+                    </button>
+
+                </form>
+
+            <?php } ?>
 
         </div>
 
     <?php
-    }
+        }
+
+    } else {
     ?>
 
-    <button class="back">
-        Back to Dashboard
-    </button>
+        <div class="order">
+            <p>No incoming orders found.</p>
+        </div>
+
+    <?php } ?>
+
+    <a href="restaurant-dashboard.php">
+        <button class="back">Back to Dashboard</button>
+    </a>
 
 </div>
 

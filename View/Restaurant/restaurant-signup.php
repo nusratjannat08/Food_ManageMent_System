@@ -38,16 +38,24 @@ unset($_SESSION["address"]);
 <head>
     <title>Restaurant Signup</title>
     <link rel="stylesheet" href="style.css">
+    <script src="restaurant-signup-ajax.js"></script>
 </head>
 <body>
 
 <fieldset>
     <legend>Restaurant Signup</legend>
 
-    <form action="../../Controller/Restaurant/restaurantSignupController.php" method="post">
+    <form id="restaurantSignupForm" action="../../Controller/Restaurant/restaurantSignupController.php" method="post">
         <label>Username:</label>
-<input type="text" name="username" value="<?php echo $username; ?>" />
-<p style="color:red"><?php echo $usernameError; ?></p>
+<input type="text"
+       name="username"
+       id="username"
+       value="<?php echo htmlspecialchars($username); ?>"
+       onkeyup="checkUsername(this.value)" />
+
+<p id="usernameStatus" style="color:red">
+    <?php echo htmlspecialchars($usernameError); ?>
+</p>
 
 <label>Restaurant Name:</label>
 <input type="text" name="name" value="<?php echo $name; ?>"/>
