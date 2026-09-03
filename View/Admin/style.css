@@ -1,0 +1,146 @@
+
+
+body {
+    background-color: olive;
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+#mainContainer,
+#loginContainer {
+    width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+}
+
+h1 {
+    text-align: center;
+    color: olive;
+    background-color: #d4a017;
+    margin: 20px;
+    padding: 15px 20px;
+}
+
+fieldset {
+    margin: 15px 20px;
+    padding: 20px;
+    background-color: beige;
+    border: 2px solid #d4a017;
+}
+
+legend {
+    background-color: olive;
+    color: white;
+    padding: 8px 20px;
+    font-size: 18px;
+}
+
+table {
+    margin: 10px auto;
+}
+
+td {
+    padding: 12px 15px;
+    color: olive;
+    font-size: 16px;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid goldenrod;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 300px;
+}
+
+button,
+input[type="submit"] {
+    margin: 5px 10px;
+    padding: 10px 30px;
+    background-color: #d4a017;
+    color: olive;
+    border: 1px solid olive;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: olive;
+    color: white;
+}
+
+.error {
+    color: red;
+}
+
+#deleteMessage {
+    text-align: center;
+    color: red;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* List page er table (viewCustomer.php, viewManager.php) */
+.dataTable {
+    width: 100%;
+}
+
+.dataTable th {
+    background-color: olive;
+    color: white;
+    padding: 10px;
+}
+
+.dataTable td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #d4a017;
+    color: olive;
+    font-size: 15px;
+}
+
+/* Back button, delete button */
+.secondaryButton {
+    background-color: olive;
+    color: white;
+}
+
+.deleteButton {
+    background-color: goldenrod;
+    color: olive;
+    border: 1px solid olive;
+}
+
+/* Dashboard welcome text */
+#welcome {
+    text-align: center;
+    color: olive;
+    font-size: 18px;
+}
+
+/* Logout button */
+#logoutButton {
+    display: block;
+    margin: 30px auto 20px auto;
+    padding: 10px 40px;
+    background-color: olive;
+    color: white;
+}
+
+/* User/Manager detail page container */
+.detailContainer {
+    width: 900px;
+}
+
+.detailHeading {
+    font-size: 38px;
+}
+
+
+.backToListButton {
+    margin-top: 15px;
+}
