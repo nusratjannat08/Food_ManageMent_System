@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../Config/DBconnection.php");
+require_once(__DIR__ . "/../../Config/DBconnection.php");
 
 class AdminModel
 {
@@ -15,6 +15,7 @@ class AdminModel
         $result = $connection->query($sql);
 
         $row = false;
+
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
         }

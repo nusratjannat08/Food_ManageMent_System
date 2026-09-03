@@ -6,10 +6,15 @@ class DatabaseConnection
     {
         $db_host = "localhost";
         $db_user = "root";
-        $db_password = ""; 
-        $db_name = "customer"; 
+        $db_password = "";
+        $db_name = "food_management_system";
 
-        $connection = new mysqli($db_host, $db_user, $db_password, $db_name);
+        $connection = new mysqli(
+            $db_host,
+            $db_user,
+            $db_password,
+            $db_name
+        );
 
         if ($connection->connect_error) {
             die("Failed to connect database: " . $connection->connect_error);
@@ -22,8 +27,6 @@ class DatabaseConnection
     {
         $connection->close();
     }
-} 
+}
 
-
- 
 ?>

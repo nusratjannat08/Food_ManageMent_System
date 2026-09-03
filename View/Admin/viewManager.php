@@ -2,85 +2,359 @@
 <html>
 
 <head>
-    <title>View All Managers</title>
-    <link rel="stylesheet" type="text/css" href="../View/style.css">
+
+    <title>View Managers</title>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="style.css">
+
+
+    <style>
+
+        /* =========================
+           BODY
+           ========================= */
+
+        body {
+            background-color: olive !important;
+            margin: 0;
+            font-family: Cambria, Cochin, Georgia,
+                         Times, "Times New Roman", serif;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+           ========================= */
+
+        #mainContainer {
+            width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+        }
+
+
+        /* =========================
+           HEADING
+           ========================= */
+
+        h1 {
+            text-align: center;
+            color: olive;
+            background-color: #d4a017;
+            margin: 20px;
+            padding: 15px 20px;
+        }
+
+
+        /* =========================
+           FIELDSET
+           ========================= */
+
+        fieldset {
+            margin: 15px 20px;
+            padding: 20px;
+            background-color: beige;
+            border: 2px solid #d4a017;
+        }
+
+
+        /* =========================
+           LEGEND
+           ========================= */
+
+        legend {
+            background-color: olive;
+            color: white;
+            padding: 8px 20px;
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           SEARCH TABLE
+           ========================= */
+
+        .searchTable {
+            margin: 10px auto;
+        }
+
+        .searchTable td {
+            padding: 8px;
+        }
+
+
+        /* =========================
+           SEARCH INPUT
+           ========================= */
+
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid goldenrod;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           SEARCH BUTTON
+           ========================= */
+
+        input[type="submit"] {
+            margin: 5px 10px;
+            padding: 10px 30px;
+            background-color: #d4a017;
+            color: olive;
+            border: 1px solid olive;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: olive;
+            color: white;
+        }
+
+
+        /* =========================
+           MANAGER TABLE
+           ========================= */
+
+        .dataTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px auto;
+        }
+
+
+        .dataTable th {
+            background-color: olive;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid olive;
+        }
+
+
+        .dataTable td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #d4a017;
+            color: olive;
+            font-size: 15px;
+            background-color: white;
+        }
+
+
+        /* =========================
+           BACK BUTTON
+           ========================= */
+
+        .backButton {
+            display: inline-block;
+            margin: 20px 10px 5px 10px;
+            padding: 10px 30px;
+            background-color: olive;
+            color: white;
+            border: 1px solid olive;
+            font-size: 15px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        .backButton:hover {
+            background-color: #d4a017;
+            color: olive;
+        }
+
+
+        /* =========================
+           NOT FOUND MESSAGE
+           ========================= */
+
+        #deleteMessage {
+            text-align: center;
+            color: red;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <div id="mainContainer">
 
-        <h1>View All Managers</h1>
-
-
-        <fieldset>
-
-            <legend>Search Manager</legend>
-
-            <form method="get" action="../Controller/viewManagerController.php">
-
-                <table>
-
-                    <tr>
-
-                        <td>Search Manager:</td>
-
-                        <td>
-                            <input type="text" name="search" id="searchManager" placeholder="Enter manager name" value="<?php echo htmlspecialchars($searchKeyword ?? ""); ?>">
-                        </td>
-
-                        <td>
-                            <button type="submit">Search</button>
-                        </td>
-
-                    </tr>
-
-                </table>
-
-            </form>
-
-        </fieldset>
+<div id="mainContainer">
 
 
-        <fieldset>
+    <!-- =========================
+         PAGE TITLE
+         ========================= -->
 
-            <legend>Manager Information</legend>
+    <h1>Manager List</h1>
 
-            <table id="managerTable" class="dataTable">
+
+    <fieldset>
+
+
+        <legend>All Managers</legend>
+
+
+        <!-- =========================
+             SEARCH FORM
+             ========================= -->
+
+        <form
+            method="GET"
+            action="../../Controller/Admin/viewManagerController.php"
+        >
+
+            <table class="searchTable">
 
                 <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                </tr>
 
-                <?php if (!empty($managers)): ?>
-                    <?php foreach ($managers as $manager): ?>
-                        <tr>
-                            <td><a href="../Controller/managerInfoController.php?username=<?php echo urlencode($manager["username"] ?? ""); ?>"><?php echo htmlspecialchars($manager["username"] ?? ""); ?></a></td>
-                            <td><a href="../Controller/managerInfoController.php?username=<?php echo urlencode($manager["username"] ?? ""); ?>"><?php echo htmlspecialchars($manager["name"] ?? ""); ?></a></td>
-                            <td><?php echo htmlspecialchars($manager["email"] ?? ""); ?></td>
-                            <td><?php echo htmlspecialchars($manager["phone"] ?? ""); ?></td>
-                            <td><?php echo htmlspecialchars($manager["address"] ?? ""); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5">No managers found.</td>
-                    </tr>
-                <?php endif; ?>
+                    <td>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="<?php
+                                echo htmlspecialchars(
+                                    $_GET["search"] ?? ""
+                                );
+                            ?>"
+                            placeholder="Search manager"
+                        >
+
+                    </td>
+
+
+                    <td>
+
+                        <input
+                            type="submit"
+                            value="Search"
+                        >
+
+                    </td>
+
+                </tr>
 
             </table>
 
-        </fieldset>
-        <a href="../View/dashboard.php">
-            <button type="button" id="backButton" class="secondaryButton">Back</button>
+        </form>
+
+
+        <br>
+
+
+        <!-- =========================
+             SHOW MANAGERS
+             ========================= -->
+
+        <?php if (!empty($managers)) { ?>
+
+
+            <table
+                id="managerTable"
+                class="dataTable"
+            >
+
+
+                <!-- TABLE HEADER -->
+
+                <tr>
+
+                    <?php
+
+                    foreach (
+                        array_keys($managers[0])
+                        as $column
+                    ) {
+
+                        echo "<th>" .
+                             htmlspecialchars($column) .
+                             "</th>";
+
+                    }
+
+                    ?>
+
+                </tr>
+
+
+                <!-- TABLE DATA -->
+
+                <?php foreach ($managers as $manager) { ?>
+
+
+                    <tr>
+
+
+                        <?php foreach ($manager as $value) { ?>
+
+
+                            <td>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $value ?? ""
+                                );
+
+                                ?>
+
+                            </td>
+
+
+                        <?php } ?>
+
+
+                    </tr>
+
+
+                <?php } ?>
+
+
+            </table>
+
+
+        <?php } else { ?>
+
+
+            <!-- NO MANAGER FOUND -->
+
+            <p id="deleteMessage">
+                No managers found.
+            </p>
+
+
+        <?php } ?>
+
+
+        <!-- =========================
+             BACK TO DASHBOARD
+             ========================= -->
+
+        <a
+            href="/Food_ManageMent_System_/.~/View/Admin/dashboard.php"
+            class="backButton"
+        >
+            Back to Dashboard
         </a>
 
 
-    </div>
+    </fieldset>
+
+
+</div>
+
 
 </body>
 

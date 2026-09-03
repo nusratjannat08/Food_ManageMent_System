@@ -15,8 +15,7 @@
 
         <fieldset>
 
-            <form action="../Controller/loginController.php" method="post">
-
+           <form action="../../Controller/Admin/loginController.php" method="post">
                 <table>
 
                     <tr>

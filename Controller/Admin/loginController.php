@@ -1,11 +1,13 @@
 <?php
 session_start();
-require_once(__DIR__ . "/../Model/AdminModel.php");
+
+require_once(__DIR__ . "/../../Model/Admin/AdminModel.php");
 
 $username = $_POST["username"] ?? "";
 $password = $_POST["password"] ?? "";
 
 $_SESSION["username"] = $username;
+
 $hasUsernameError = $hasPasswordError = true;
 
 if (!$username) {
@@ -23,18 +25,28 @@ if (!$password) {
 }
 
 if ($hasUsernameError || $hasPasswordError) {
-    Header("Location: ../View/login.php");
+
+    Header("Location: ../../View/Admin/login.php");
+    exit();
+
 } else {
+
     $model = new AdminModel();
     $admin = $model->login($username, $password);
 
     if ($admin) {
+
         $_SESSION["loggedInUsername"] = $username;
         $_SESSION["isLoggedIn"] = true;
-        Header("Location: ../View/dashboard.php");
+
+        Header("Location: ../../View/Admin/dashboard.php");
         exit();
+
     } else {
+
         $_SESSION["loginError"] = "Invalid username or password";
-        Header("Location: ../View/login.php");
+
+        Header("Location: ../../View/Admin/login.php");
+        exit();
     }
 }

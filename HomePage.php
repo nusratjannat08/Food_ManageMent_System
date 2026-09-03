@@ -64,10 +64,10 @@
 
     <div class="menu">
 
-        <a href="admin-signup.php">
+     <a href="./View/Admin/login.php">
             <div class="card">
                 <h3>Admin</h3>
-                <p>Sign up as an administrator</p>
+                <p>LOGIN as an administrator</p>
             </div>
         </a>
 
